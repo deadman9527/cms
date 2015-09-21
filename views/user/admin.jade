@@ -1,0 +1,67 @@
+extend ../layout
+block pageCfg
+	- header.menu = '';
+	
+block container
+
+	style.
+		.user-list{
+			margin:20px;
+		}
+		.user-list .label{
+			margin-right:10px;
+		}
+		h4{
+			margin:30px 0 0 20px;
+		}
+
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 管理配置
+						h4 管理员
+						p.user-list
+							- page.admin.forEach(function(item, i){
+								span.label.label-info !{item.name} (!{item.uid})
+							- });
+							
+						form.form-horizontal(role="form", method="post", action="./admin/pms/update/admin")
+							.form-group
+								label.col-md-2.control-label 增加管理员：
+								.col-md-3
+									input.form-control(type="text", name="uid", required, placeholder='请输入工号')
+								.col-md-1
+									button.btn.btn-primary.btn-sm(type="submit") 增加
+							
+							
+						h4 程序员
+						p.user-list
+							- page.coder.forEach(function(item, i){
+								span.label.label-info !{item.name}(!{item.uid})
+							- });
+						form.form-horizontal(role="form", method="post", action="./admin/pms/update/coder")
+							.form-group
+								label.col-md-2.control-label 增加程序员：
+								.col-md-3
+									input.form-control(type="text", name="uid", required, placeholder='请输入工号')
+								.col-md-1
+									button.btn.btn-primary.btn-sm(type="submit") 增加
+						
+						h4 清空权限
+						form.form-horizontal(role="form", method="post", action="./admin/pms/remove/")
+							.form-group
+								label.col-md-2.control-label 工号：
+								.col-md-3
+									input.form-control(type="text", name="uid", required, placeholder='请输入工号')
+								.col-md-1
+									button.btn.btn-primary.btn-sm(type="submit") 删除
+
+						h4 同步用户
+						.form-group
+							.col-md-2
+							.col-md-3
+								a.btn.btn-primary.btn-sm(href="/s/update/user", target="_blank") 同步用户
+					
+						

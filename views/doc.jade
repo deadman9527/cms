@@ -1,0 +1,13 @@
+extend layout
+block pageCfg
+	- header.menu = 'doc';
+	
+block container
+	link(rel="stylesheet",href="/assets/doc.css")
+		
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.info
+						| !{content}

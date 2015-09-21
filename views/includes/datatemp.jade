@@ -1,0 +1,120 @@
+- var hasEidtor = false;
+
+mixin inputEl(type, item, key, name, isRequired)
+	- if(type === 'link' || type === 'img')
+		input.form-control(type="url", name= name, ng-model= item + '.' + key, required= isRequired)
+	- else if(type === 'color')
+		.input-group
+			span.input-group-addon #
+			input.form-control(type="text", name= name, ng-model= item + '.' + key, ng-pattern="/^[A-Fa-f0-9]{6}$/", required= isRequired)
+	- else if(type === 'boolean')
+		input(type="checkbox", name= name, ng-model= item + '.' + key)
+	- else if(type === 'richText')
+		- hasEidtor = true;
+		textarea.form-control(rows="2", name= name, ng-model= item + '.' + key, required= isRequired)
+		button.btn.btn-default.btn-sm(style="margin:5px 0 0 0;", type="button", ng-click="showRichEditor(#{item}, '#{key}')") 可视化编辑
+	- else if(type === 'date')
+		input.form-control(type="text", name= name, ng-model= item + '.' + key, placeholder="yyyy-MM-dd", ng-pattern="/^20[0-2][0-9]-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1])$/", required= isRequired)
+	- else if(type === 'datetime')
+		input.form-control(type="text", name= name, ng-model= item + '.' + key, placeholder="yyyy-MM-dd HH:mm:ss", ng-pattern="/^20[0-2][0-9]-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1]) ([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/", required= isRequired)
+	- else if(type === 'number')
+		input.form-control(type="text", name= name, ng-model= item + '.' + key, ng-pattern="/^\\d+(\\.\\d+)?$/", required= isRequired)
+	- else
+		input.form-control(type="text", name= name, ng-model= item + '.' + key, required= isRequired)
+			
+	p.form-control-static.text-danger(ng-show= "editModForm['" + name + "'].$error.required")
+		span.glyphicon.glyphicon-remove-circle
+		|  不能为空 ~
+	p.form-control-static.text-danger(ng-show= "editModForm['" + name + "'].$error.url")
+		span.glyphicon.glyphicon-remove-circle
+		|  链接地址格式不符 ~
+	p.form-control-static.text-danger(ng-show= "editModForm['" + name + "'].$error.pattern")
+		span.glyphicon.glyphicon-remove-circle
+		|  输入格式不符 ~
+
+div(ng-hide="richEditing")
+	- data.fields.forEach(function(f){
+		h5.bg-info !{f.name}
+			- if(f.type.indexOf('List') > -1)
+				span(ng-hide="importKey")
+					button.btn.btn-default.btn-xs(type="button", ng-click="addRow('#{f.key}')")
+						span.glyphicon.glyphicon-plus
+						|  新加一行
+					button.btn.btn-default.btn-xs(type="button", ng-click="importMode('#{f.key}')")
+						span.glyphicon.glyphicon-log-in
+						|  批量数据
+				span(ng-show="importKey")
+					button.btn.btn-default.btn-xs(type="button", ng-click="parseImport()")
+						span.glyphicon.glyphicon-transfer
+						|  数据解析
+					button.btn.btn-default.btn-xs(type="button", ng-click="editMode()")
+						span.glyphicon.glyphicon-pencil
+						|  手工填写
+				
+		- if(f.type.indexOf('List') > -1)
+			div(ng-show="importKey == '#{f.key}'")
+				.row
+					.col-md-3
+						p.form-control-static 批量数据
+				.form-group
+					.col-md-6
+						textarea.form-control(rows="5", name= f.key, ng-model= ['importData', f.key].join('.'), ng-list!= '&#10;', ng-trim="false")
+					.col-md-3
+						p.form-control-static.text-danger(ng-show= "!importData['#{f.key}'] || importData['#{f.key}'].length == 0")
+							span.glyphicon.glyphicon-remove-circle
+							|  不能为空 ~
+			div(ng-hide="importKey == '#{f.key}'")
+				.row
+					- f.content.forEach(function(c){
+						div(class= 'col-md-' + (f.content.length > 4 ? 2 : 3))
+							p.form-control-static !{c.name}
+					- });
+				.form-group(ng-repeat= "item in curEditModData." + f.key)
+					- f.content.forEach(function(c, i){
+						div(class= 'col-md-' + (f.content.length > 4 ? 2 : 3))
+							+inputEl(c.type, "item", c.key, [f.key, c.key, '{{$index}}'].join('.'))
+							- if(i === f.content.length -1)
+								p.row-operate
+									a(href="javascript:void(0);", ng-click="upRow('#{f.key}', item)")
+										span.glyphicon.glyphicon-arrow-up
+									a(href="javascript:void(0);", ng-click="downRow('#{f.key}', item)")
+										span.glyphicon.glyphicon-arrow-down
+									a(href="javascript:void(0);", ng-click="removeRow('#{f.key}', item)")
+										span.glyphicon.glyphicon-remove
+					- });
+		- else
+			- if(f.content)
+				.row
+					- f.content.forEach(function(c){
+						div(class= 'col-md-' + (f.content.length > 4 ? 2 : 3))
+							p.form-control-static !{c.name}
+					- });
+			.form-group
+				- if(f.content)
+					- f.content.forEach(function(c, i){
+						div(class= 'col-md-' + (f.content.length > 4 ? 2 : 3))
+							+inputEl(c.type, "curEditModData." + f.key, c.key, [f.key, c.key].join('.'))
+					- });
+				- else
+					.col-md-3
+						+inputEl(f.type, "curEditModData", f.key, f.key)
+	- });
+
+
+
+- if(hasEidtor)
+	link(href="http://g.alicdn.com/kissy/k/1.4.1/editor/theme/cool/editor-min.css", rel="stylesheet")
+	div(ng-show="richEditing")
+		h5.bg-info 可视化编辑
+			span
+				button.btn.btn-default.btn-xs(type="button", ng-click="saveRichEditor()")
+					span.glyphicon.glyphicon-floppy-saved
+					|  保存数据
+				button.btn.btn-default.btn-xs(type="button", ng-click="cancelRichEditor()")
+					span.glyphicon.glyphicon-remove
+					|  取消编辑
+		#J_EditorCon
+		
+	script(src="/assets/buildeditor.js")
+
+

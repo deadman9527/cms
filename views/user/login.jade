@@ -1,0 +1,45 @@
+extend ../layout
+block pageCfg
+	- header.menu = '';
+	
+block container
+
+	style.
+		.bg-danger{
+			padding:5px 10px;
+			margin:0;
+		}
+		small{
+			float: right;
+		}
+
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 用户登录
+							- if(header.isLogin)
+								small
+									| 无法登录？请 
+									a(href="/s/update/user", target="_blank") 同步用户
+						form.form-horizontal(role="form", method="post", action="")
+							- if(errMsg)
+								.form-group
+									.col-md-offset-1.col-md-3
+										p.bg-danger.text-danger 
+											span.glyphicon.glyphicon-remove-circle
+											|  !{errMsg}
+							.form-group
+								label.col-md-1.control-label 工号：
+								.col-md-3
+									input.form-control(type="text", name="userName", required, value= page.name, placeholder='请输入工号')
+							.form-group
+								label.col-md-1.control-label 密码：
+								.col-md-3
+									input.form-control(type="password", name="userPassword", required, placeholder='请输入密码')
+							.form-group
+								.col-md-offset-1.col-md-3
+									button.btn.btn-primary(type="submit") 登录
+									
+									

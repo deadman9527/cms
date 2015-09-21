@@ -1,0 +1,109 @@
+mixin searchTypeBtn(key)
+	button.btn.btn-sm.J_SearchType(class= (search.sType === key ? 'btn-info' : 'btn-default'), type="button", data-type= key)
+		block
+
+extend ../layout
+block pageCfg
+	- header.menu = 'page';
+	- header.ngApp = 'cms';
+	
+block container
+	link(rel="stylesheet",href="/assets/list.css")
+	
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 页面管理
+							- if(header.isLogin)
+								a.create_btn.btn.btn-primary(role='button', href="/page/add") 新建页面
+								
+						form#J_Search.form-horizontal(role="form", method="get", action="")
+							.form-group
+								.col-md-7
+									.btn-group
+										+searchTypeBtn('all')
+											span.glyphicon.glyphicon-th-large
+											|  全部
+										- if(header.isLogin)
+											+searchTypeBtn('mine')
+												span.glyphicon.glyphicon-user
+												|  我创建的
+											- if(!(header.permission === 'admin' || header.permission === 'coder'))
+												+searchTypeBtn('key')
+													span.glyphicon.glyphicon-lock
+													|  我有权限的
+											+searchTypeBtn('fav')
+												span.glyphicon.glyphicon-star
+												|  我收藏的
+										+searchTypeBtn('m')
+											span.glyphicon.glyphicon-phone
+											|  移动页面
+										+searchTypeBtn('pc')
+											|  PC页面
+										+searchTypeBtn('rgn')
+											|  代码区块
+										+searchTypeBtn('data')
+											|  数据区块
+												
+								.col-md-4
+									input.form-control(type="text", name="q", placeholder="名称、标题、作者、URL ~", value= search.title)
+								.col-md-1
+									button.btn.btn-primary(type="submit") 搜索
+						table.table
+							thead
+								tr
+									th(width="16%") 名称
+									th(width="16%") 标题
+									th(width="10%") 类型
+									th(width="8%") 状态
+									th(width="10%") 数据
+									th(width="8%") 作者
+									th.top-pagination(width="") 操作
+										- if(listData.length > 0)
+											+paginationSmall(search.curPage, page.totalPage)
+									
+							tbody
+								- listData.forEach(function(item, i){
+									tr
+										- if(item.hasKey || header.permission === 'admin' || header.permission === 'coder')
+											td
+												a.title.util-ellipsis(href= '/page/' + item._id.toString(), title= item.name, style= header.permission === 'admin' ? 'max-width: 160px;' : '') !{item.name}
+											td
+												a.title.util-ellipsis(href= '/page/' + item._id.toString(), title= item.title, style= header.permission === 'admin' ? 'max-width: 160px;' : '') !{item.title}
+										- else
+											td
+												span(title= item.name).title.util-ellipsis !{item.name}
+											td
+												span(title= item.title).title.util-ellipsis !{item.title}
+										td
+											| !{page.typeMap[item.pageType]}
+										td
+											+pageStatus(item, page.statusMap)
+										td
+											- if((item.curStatus.id === 'published' || item.curStatus.id === 'editing') && (item.pageType === 'm' || item.pageType === 'pc'))
+												- if(item.piwik && item.piwik.data)
+													span pv: !{item.piwik.data.nb_hits} 
+													span uv: !{item.piwik.data.nb_uniq_visitors}
+												- else
+													span.text-muted 暂无数据
+										td
+											| !{item.owner && item.owner.name}
+										td
+											+pageOperate(item)
+								- });
+								- if(listData.length === 0)
+									tr
+										td(colspan="5") 搜索无结果！
+								
+						+pagination(search.curPage, page.totalPage)
+						
+	+pageOperateJs()
+	script(src="/assets/pagination.js")
+	script.
+		$('.J_SearchType').on('click', function(){
+			var sType = $(this).attr('data-type');
+			window.location.href = window.location.origin + window.location.pathname + '?type=' + sType;
+		});
+		

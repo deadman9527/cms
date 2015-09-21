@@ -1,0 +1,37 @@
+.pages-list{
+	background: rgba(255, 255, 255, 0.7);
+}
+.info{
+	font-size: 14px;
+	line-height: 1.75;
+}
+.info h1{
+	margin: 0;
+	font-size: 24px;
+	border-bottom: 1px dotted #666;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+.info h2{
+	font-size: 20px;
+}
+.info h3{
+	font-size: 18px;
+}
+.info h4{
+	font-size: 16px;
+}
+
+.info ul,
+.info ol{
+	margin-left:25px;
+}
+.info ul li{
+
+}
+
+.info img{
+	max-width:800px;
+	margin:10px 20px;
+}
+

@@ -1,0 +1,39 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'img';
+	
+block container
+
+	link(rel="stylesheet",href="/assets/lib/dropzone/dropzone.css")
+	link(rel="stylesheet",href="/assets/imgupload.css")
+	
+	style.
+		h2 small{
+			color: #fff;
+			margin-left:20px;
+			font-size:14px;
+		}
+		h2 small a{
+			color: #fff;
+			text-decoration: underline;
+		}
+		h2 small a:hover{
+			color: #FF3861;
+		}
+	
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 图片上传
+							small 图片最大不超过1M，图片体积公式：
+								a(href="http://bug.quxiu.me/size.html", target="_blank") 高x宽x0.4/1024+2=标准最大k数
+							a.create_btn.btn.btn-primary(role='button', href="/img") 我的图片
+						
+						form.dropzone(action="#")
+
+
+	script(type="text/javascript" src="/assets/lib/dropzone/dropzone.js")
+	script(type="text/javascript" src="/assets/lib/zeroClipboard/ZeroClipboard.min.js")
+	script(type="text/javascript" src="/assets/imgupload.js")

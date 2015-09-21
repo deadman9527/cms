@@ -1,0 +1,74 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'mod';
+	
+block container
+	link(rel="stylesheet",href="/assets/list.css")
+	style.
+		.label{
+			margin-right:10px;
+		}
+	
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 模块管理
+							a.create_btn.btn.btn-primary(role='button', href="/mod/add") 新建模块 
+								
+						form#J_Search.form-horizontal(role="form", method="get", action="")
+							.form-group
+								.col-md-4
+									.btn-group
+										button.btn.J_SearchType(class= (search.sType === "all" ? 'btn-info' : 'btn-default'), type="button", data-type="all")
+											span.glyphicon.glyphicon-th-large
+											|  全部
+										button.btn.J_SearchType(class= (search.sType === "mine" ? 'btn-info' : 'btn-default'), type="button", data-type="mine")
+											span.glyphicon.glyphicon-user
+											|  我创建的
+										button.btn.J_SearchType(class= (search.sType === "fav" ? 'btn-info' : 'btn-default'), type="button", data-type="fav")
+											span.glyphicon.glyphicon-star
+											|  我收藏的
+								.col-md-4
+									input.form-control(type="text", name="q", placeholder="请输入标题关键字~", value= search.title)
+								.col-md-1
+									button.btn.btn-primary(type="submit") 搜索
+						table.table
+							thead
+								tr
+									th(width="30%") 模块名
+									th(width="30%") 标签
+									th(width="10%") 作者
+									th.top-pagination(width="") 操作
+										- if(listData.length > 0)
+											+paginationSmall(search.curPage, page.totalPage)
+									
+							tbody
+								- listData.forEach(function(item, i){
+									tr
+										td
+											a.title.util-ellipsis(href= '/mod/code/' + item._id.toString()) !{item.name}
+										td
+											- item.tag.forEach(function(t){
+												span.label.label-info !{t}
+											- });
+										td
+											| !{item.owner && item.owner.name}
+										td
+											+modOperate(item)
+								- });
+								- if(listData.length === 0)
+									tr
+										td(colspan="4") 搜索无结果！
+								
+						+pagination(search.curPage, page.totalPage)
+						
+	script(src="/assets/pagination.js")
+	script(src="/assets/pageoprate.js")
+	script.
+		$('.J_SearchType').on('click', function(){
+			var sType = $(this).attr('data-type');
+			window.location.href = window.location.origin + window.location.pathname + '?type=' + sType;
+		});
+		

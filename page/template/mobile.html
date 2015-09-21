@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta name="keywords" content="趣秀,quxiu.me"/>
+<meta name="description" content="趣秀(quxiu.me)"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no,email=no" name="format-detection" />
+<title>${title}</title>
+<link rel="stylesheet" href="http://m.quxiu.me/min/?f=tms/hui/hui.css,assets/ctrl/ctrl-bottombar/bottombar.css" media="all">
+{@if cssCombo}
+<link rel="stylesheet" href="http://m.quxiu.me/min/?f=${cssCombo}" media="all">
+{@/if}
+<style type="text/css">
+$${css}
+</style>
+<script type="text/javascript">
+;(function(win) {
+    var h;
+    var dpr = win.navigator.appVersion.match(/iphone/gi)?win.devicePixelRatio:1;
+    var scale = 1 / dpr;
+    var docEl = document.documentElement;
+    var metaEl = document.createElement('meta');
+
+    function setUnitA(){
+        win.rem = docEl.getBoundingClientRect().width / 16;
+        docEl.style.fontSize = win.rem + 'px';
+    }
+
+    win.dpr = dpr;
+    win.addEventListener('resize', function() {
+        clearTimeout(h);
+        h = setTimeout(setUnitA, 300);
+    }, false);
+    win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            clearTimeout(h);
+            h = setTimeout(setUnitA, 300);
+        }
+    }, false);
+
+    docEl.setAttribute('data-dpr', dpr);
+    metaEl.setAttribute('name', 'viewport');
+    metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+    if (docEl.firstElementChild) {
+        docEl.firstElementChild.appendChild(metaEl);
+    } else {
+        var wrap = document.createElement('div');
+        wrap.appendChild(metaEl);
+        document.write(wrap.innerHTML);
+    }
+
+    setUnitA();
+})(window);
+</script>
+<script type="text/javascript" src="http://m.quxiu.me/assets/js/3rd/zepto.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+$${html}
+</div>
+<script type="text/javascript" src="http://m.quxiu.me/min/?b=assets&f=ctrl/ctrl-topbar/topbar.js,ctrl/ctrl-bottombar/bottombar.js,lib/lib-env/env.js,lib/lib-httpurl/httpurl.js"></script><!--lib/lib-callapp/callapp.js-->
+<script>
+new ctrl.topBar({
+	isIndex: false
+});
+new ctrl.bottomBar({
+	showCircle:false,
+	showApp:false
+});
+// $('#callApp').on('click', function(e) {
+// 	var schema = location.href,
+// 		params = true,
+// 		point = true;
+// 	lib.callapp.gotoPage(schema, {point: point, params: params});
+// });
+</script>
+{@if jsCombo}
+<script type="text/javascript" src="http://m.quxiu.me/min/?f=${jsCombo}"></script>
+{@/if}
+<script type="text/javascript">
+$${js}
+</script>
+<script src="http://m.quxiu.me/assets/lib/lib-h5log/h5log.js"></script> 
+</body>
+</html>

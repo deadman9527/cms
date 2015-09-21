@@ -1,0 +1,93 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'qrcode';
+	
+block container	
+	style.
+		h2 small{
+			color: #fff;
+			margin-left:20px;
+			font-size:14px;
+		}
+		h2 small a{
+			color: #fff;
+			text-decoration: underline;
+		}
+		h2 small a:hover{
+			color: #FF3861;
+		}
+		h4{
+			margin-bottom:15px;
+			font-size:16px;
+		}
+		
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 生成二维码
+							a.create_btn.btn.btn-primary(role='button', href="/qrcode") 我的二维码
+						form.form-horizontal
+							h4 移动端商品详情页面二维码
+							.form-group
+								label.col-md-2.control-label 商品ID：
+								.col-md-8
+									.input-group
+										span.input-group-addon http://m.quxiu.me/detail.html?productId=
+										input.form-control#J_ProductId(type="text")
+										span.input-group-addon &source=pc
+							.form-group
+								.col-md-2.col-md-offset-2
+									button.btn.btn-primary#J_CreateQRBtn(type="button") 生成
+							hr
+							.form-group
+								label.col-md-2.control-label 原文：
+								.col-md-8
+									input.form-control#J_QRCon(type="text", readonly)
+							.form-group
+								label.col-md-2.control-label 二维码URL：
+								.col-md-8
+									input.form-control#J_QRUrl(type="text", readonly)
+							.form-group
+								label.col-md-2.control-label 二维码：
+								.col-md-8
+									img#J_QRImg
+
+	script.
+		$(function(){
+			$('#J_CreateQRBtn').on('click',function(){
+				var productId = $("#J_ProductId").val(),
+					targetUrl;
+				if(!productId){
+					alert('请输入商品ID');
+					return false;
+				}
+				
+				targetUrl = "http://m.quxiu.me/detail.html?productId=" + productId + "&source=pc";
+				
+				$.ajax({
+					type: "GET",
+					url: "/qrcode/url",
+					data:{
+						"c": targetUrl,
+						"s": 5,
+						"m": 1
+					},
+					dataType: 'json',
+					success: function(data){
+						if(data.success){
+							$("#J_QRCon").val(targetUrl);
+							$("#J_QRUrl").val(data.url);
+							$("#J_QRImg").attr('src',data.url);
+						}else{
+							alert("请求失败，请重试，失败原因：" + data.err);
+						}
+					},
+					error: function(){
+						alert("请求失败，请重试~");
+					}
+				});
+				
+			});
+		});

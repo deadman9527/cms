@@ -1,0 +1,126 @@
+mixin searchTypeBtn(key)
+	button.btn.btn-sm.J_SearchType(class= (search.sType === key ? 'btn-info' : 'btn-default'), type="button", data-type= key)
+		block
+
+mixin userOperateJs()
+	style.
+		.tag-con{
+			margin-top: 10px;
+		}
+		.tag-con .label{
+			margin-right: 10px;
+		}
+	#J_ModifyInfoDialog.modal.fade(role="dialog", aria-hidden="true")
+		.modal-dialog
+			.modal-content
+				form.form-horizontal(role="form", ng-controller="infoModify", name="infoForm")
+					.modal-header
+						button.close(type="button", data-dismiss="modal")
+							span(aria-hidden="true") &times;
+							span.sr-only Close
+						h4.modal-title 编辑页面基本信息
+					.modal-body
+						.form-group
+							label.col-md-2.control-label 用户名称
+							.col-md-5
+								p.form-control-static {{infoData.name}}
+						.form-group
+							label.col-md-2.control-label 用户工号
+							.col-md-5
+								p.form-control-static {{infoData.uid}}							
+						.form-group
+							label.col-md-2.control-label 修改密码
+							.col-md-5
+								input.form-control(type="text", name="title", ng-model="infoData.password", required)
+							.col-md-3
+								p.form-control-static.text-danger(ng-show="infoForm.password.$error.required")
+									span.glyphicon.glyphicon-remove-circle
+									|  密码不能为空
+					.modal-footer
+						button.btn.btn-primary(type="button", ng-click="saveInfo()") 修改密码
+						button.btn.btn-default(type="button", data-dismiss="modal") 取消
+	script(src="/assets/useroprate.js")
+
+
+extend ../layout
+block pageCfg 
+	- header.menu = 's';
+	- header.ngApp = 'cms';
+
+block container
+	link(rel="stylesheet",href="/assets/list.css")
+
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 用户管理
+							button.J_SyncUserBtn.create_btn.btn.btn-primary.J_PopupInfo(role='button', data-url='/s/update/user')
+								| 同步用户
+						form#J_Search.form-horizontal(role="form", method="get", action="")
+							.form-group
+								.col-md-7
+									.btn-group
+										+searchTypeBtn('all')
+											span.glyphicon.glyphicon-th-large
+											|  全部
+										+searchTypeBtn('admin')
+											|  管理员
+										+searchTypeBtn('coder')
+											|  程序员												
+								.col-md-4
+									input.form-control(type="text", name="q", placeholder="名称、标题、作者、URL ~", value= search.title)
+								.col-md-1
+									button.btn.btn-primary(type="submit") 搜索
+						table.table
+							thead
+								tr
+									th(width="10%") 姓名
+									th(width="20%") 工号
+									th(width="25%")	EMAIL
+									th(width="10%") 管理权限
+									th.top-pagination(width="") 操作
+										+paginationSmall(search.curPage, page.totalPage)
+							tbody
+								- listData.forEach(function(item, i){
+									tr
+										td
+											!{item.name}
+										td 
+											!{item.uid}
+										td
+											!{item.email}
+										td
+											- if(item.permission === "admin")
+												buttton.btn.btn-danger.btn-xs
+													span.glyphicon.glyphicon-user
+													|  管理员
+											- if(item.permission === "coder")
+												buttton.btn.btn-primary.btn-xs
+													span.glyphicon.glyphicon-user
+													|  程序员
+										td
+											button.J_SetAdminBtn.btn.btn-danger.btn-xs.J_PopupInfo(type="button", data-toggle="tooltip", data-type="admin", data-url= '/s/user/set/#{item._id.toString()}?type=admin')
+												span.glyphicon.glyphicon-user
+												|  设为管理员
+											button.J_SetAdminBtn.btn.btn-primary.btn-xs.J_PopupInfo(type="button", data-toggle="tooltip", data-type:"coder", data-url= '/s/user/set/#{item._id.toString()}?type=coder')
+												span.glyphicon.glyphicon-user
+												| 设为程序员
+											button.J_MInfoBtn.btn.btn-info.btn-xs.J_PopupInfo(type="button", data-toggle="modal", data-target="#J_ModifyInfoDialog", ng-click="infoData={'id':'#{item._id}', 'uid': '#{item.uid.toString()}', 'name': '#{item.name}'};")
+												span.glyphicon.glyphicon-edit
+												| 修改密码
+								- });
+								- if(listData.length === 0)
+									tr
+										td(colspan="6") 搜索无结果！
+
+						+pagination(search.curPage, page.totalPage)
+
+	+userOperateJs()
+	script(src="/assets/pagination.js")
+	script.
+		$('.J_SearchType').on('click', function(){
+			var sType = $(this).attr('data-type');
+			window.location.href = window.location.origin + window.location.pathname + '?type=' + sType;
+		});

@@ -1,0 +1,122 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'page';
+	- header.ngApp = 'cms';
+	
+block container
+	style.
+		.btn{
+			margin-right:30px;
+		}
+		.radio label{
+			margin-right:10px;
+		}
+		.errorMsg{
+			padding-left: 15px;
+			margin-bottom: 15px;
+		}
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 构建页面
+
+						form.form-horizontal(role="form", name="buildForm", action="#", method="post", ng-controller="buildPage")
+							- if(errorMsg)
+								.row
+									.col-md-5.col-md-offset-2
+										p.errorMsg.form-control-static.bg-danger.text-danger
+											span.glyphicon.glyphicon-remove-circle
+											|  !{errorMsg}
+							.form-group
+								label.col-md-2.control-label 页面名称
+								.col-md-5
+									input.form-control(type="text", name="name", ng-model="name", required)
+								.col-md-5
+									p.form-control-static.text-warning(ng-show="buildForm.name.$valid")
+										span.glyphicon.glyphicon-warning-sign
+										|  只供内部使用，合理运用可以更快速找到页面 ~
+									p.form-control-static.text-danger(ng-show="buildForm.name.$error.required")
+										span.glyphicon.glyphicon-remove-circle
+										|  不能为空 ~
+							.form-group
+								label.col-md-2.control-label 页面标题
+								.col-md-5
+									input.form-control(type="text", name="title", ng-model="title", required)
+								.col-md-5
+									p.form-control-static.text-warning(ng-show="buildForm.title.$valid")
+										span.glyphicon.glyphicon-warning-sign
+										|  会显示在页面标题栏 ~
+									p.form-control-static.text-danger(ng-show="buildForm.title.$error.required")
+										span.glyphicon.glyphicon-remove-circle
+										|  不能为空 ~
+							.form-group
+								label.col-md-2.control-label 线上地址
+								.col-md-5
+									.input-group
+										span.input-group-addon http://act.quxiu.me/{{pageType}}/
+										input.form-control(type="text", name="path", ng-model="path", required, ng-pattern="/^[a-z0-9]+$/")
+										span.input-group-addon {{pageType === 'data' ? '.json' : '.html'}}
+								.col-md-5
+									p.form-control-static.text-warning(ng-show="buildForm.path.$valid")
+										span.glyphicon.glyphicon-warning-sign
+										|  只能包含英文及数字，创建后不能修改 ~
+									p.form-control-static.text-danger(ng-show="buildForm.path.$error.pattern")
+										span.glyphicon.glyphicon-remove-circle
+										|  格式有误，只能包含英文及数字 ~
+									p.form-control-static.text-danger(ng-show="buildForm.path.$error.required")
+										span.glyphicon.glyphicon-remove-circle
+										|  不能为空 ~
+
+							.form-group
+								label.col-md-2.control-label 构建方式
+								.col-md-5.radio
+									- if(pageData)
+										input(type="hidden", name="buildType", ng-model="buildType")
+										| !{buildMap[pageData.buildType]}
+									- else
+										label
+											input(type="radio", name="buildType", ng-model="buildType", value="visual", checked)
+											|  可视化构建
+										label
+											input(type="radio", name="buildType", ng-model="buildType", value="code")
+											|  代码构建
+							.form-group
+								label.col-md-2.control-label 页面类型
+								.col-md-5.radio
+									- if(pageData)
+										input(type="hidden", name="pageType", ng-model="pageType")
+										| !{typeMap[pageData.pageType]}
+									- else
+										label
+											input(type="radio", value="m" name="pageType", ng-model="pageType", checked)
+											|  移动端页面
+										label
+											input(type="radio", value="pc", name="pageType", ng-model="pageType")
+											|  PC端页面
+										label
+											input(type="radio", value="rgn", name="pageType", ng-model="pageType")
+											|  代码区块
+										label(ng-show="buildType==='code'")
+											input(type="radio", value="data", name="pageType", ng-model="pageType")
+											|  数据区块
+							.form-group
+								.col-md-10.col-md-offset-2
+									button.btn.btn-primary.btn-lg(type="button", ng-click="doSubmit()") 开始构建
+
+	script.
+		var S = KISSY;
+			ngPageMod = angular.module('cms', []);
+		ngPageMod.controller('buildPage', ['$scope', function($scope){
+			$scope.title = '!{buildData ? buildData.title : (pageData ? pageData.title : '')}';
+			$scope.name = '!{buildData ? buildData.name : (pageData ? pageData.name : '')}';
+			$scope.path = '!{buildData ? buildData.path : ''}';
+			$scope.buildType = '!{pageData ? pageData.buildType : (buildData ? buildData.buildType : 'visual')}';
+			$scope.pageType = '!{pageData ? pageData.pageType : (buildData ? buildData.pageType : 'm')}';
+			$scope.doSubmit = function(){
+				if($scope.buildForm.$valid){
+					$('.form-horizontal')[0].submit();
+				}
+			};
+		}]);

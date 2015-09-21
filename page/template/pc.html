@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>${title} - 唯一优品</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" type="image/x-icon" href="http://statics.quxiu.me/statics/favicon.ico">
+<link href="http://statics.quxiu.me/statics/assets/css/ve_index.css?_5f0364577d61d6" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.wrapper {
+background-color: #fff;
+color: #666;
+}
+$${css}
+</style>
+
+</head>
+
+<body>
+<div class="top-bar">
+    <div class="topbar-m clear">
+        <ul class="top-nav-tool">
+            <li id="userinfo_top">
+                <div class="webcome-ve"><span>欢迎来到唯一优品，请</span><a data-interaction="global|tuserinfo|1|1" href="/user-login.html" title="登录">登录</a><i class="i-line"></i> <a data-interaction="global|tuserinfo|1|2" href="/user-register.html" class="c-reg" title="注册">免费注册</a><i class="i-line"></i> <a data-interaction="global|tuserinfo|1|4" href="/uc_order.html">我的唯一</a><i class="i-line"></i>
+                </div>
+            </li>
+            <li>
+                <a href="/seller/seller_info/seller_login.html">商家中心</a>
+                <i class="i-line"></i>
+            </li>
+            <li class="ve-phone">
+                <i class="icon-topphone"></i>
+                <a href="/index.php?ctl=download?f=top_bar&amp;md=index">手机唯一</a>
+                <i class="i-line"></i>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="addFavorite()">收藏唯一</a>
+                <i class="i-line"></i>
+            </li>
+            <li class="online-kf pull-down">
+                <a href="javascript:;" class="online-kfA">在线客服</a>
+                <i class="icon-down"></i>
+                <i class="i-line"></i>
+                <div class="pull-down-box">
+                    <i class="icon-pull-up"></i>
+                    <div class="kfbox-item">
+                        <a data-interaction="global|onlineservice|1|1" onclick="window.open('http://v2.live800.com/live800/chatClient/chatbox.jsp?companyID=457738&amp;jid=3221650122&amp;skillId=6642', 'newwindow', 'height=540, width=800, top=0,left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no')" href="javascript:;" class="kf-link">在线咨询<i class="icon-topkf"></i></a>
+                        <a data-interaction="global|onlineservice|1|2" onclick="window.open('http://v2.live800.com/live800/chatClient/chatbox.jsp?companyID=457738&amp;jid=3221650122&amp;skillId=6643', 'newwindow', 'height=540, width=800, top=0,left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no')" href="javascript:;" class="kf-link">售后服务<i class="icon-topkf"></i></a>
+                        <a data-interaction="global|onlineservice|1|2" href="/help-1.html?f=top_bar&amp;md=index" class="kf-link">帮助中心<i class="icon-help"></i></a>
+                    </div>
+                </div>
+            </li>
+            <li class="pull-down attention">
+                <a href="javascript:;" class="a-attent">关注</a>
+                <i class="icon-down"></i>
+                <div class="pull-down-box attention-box">
+                    <i class="icon-pull-up"></i>
+                    <div class="qrcode-item clear">
+                        <div class="item weixin">
+                            <p class="qr-title">微信号：ve-111</p>
+                            <div class="QR-image"><i class="ve-topweixin"></i>
+                            </div>
+                        </div>
+                        <div class="item weibo">
+                            <p class="qr-title">微博：ve2014</p>
+                            <div class="QR-image"><a data-interaction="global|weibo|1|1" href="http://weibo.com/VE2014" target="_blank" rel="nofollow"><i class="ve-topweibo"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="header">
+    <div class="logo_box">
+        <div class="ve_logo">
+            <div class="logo fl">
+                <h1><a data-interaction="global|nav6|1|1" href="/?f=logo&amp;md=index" title="唯一优品">国内专业的母婴特卖平台</a></h1>
+            </div>
+            <!-- cart_flag_have显示“发票提示invoice-tips”这里既做了php判断又做了js判断 -->
+            <div class="cart_flag_all right">
+                <a href="/cart.html?f=home_head&amp;md=index" class="btn-shopp-Cart"><span>购物车<em class="cart-count">0</em>件</span><!-- <i class="invoice-tips"></i> --></a>
+                <!-- 购物车商品 -->
+                <div class="goods-all none" style="display: none;"><i class="icon-pull-up"></i>
+                    <div class="goods-content clear">
+                        <div class="goods-cart">
+                            <ul class="goods-cart-list">
+                                <li class="goods-no"><strong>快去挑选商品吧！</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="goods-foot clear">
+                        <div class="min-count">小计：<strong>0</strong>元</div> <a href="#" class="btn-settlement">去结算</a>
+                    </div>
+                    <div class="sidbar_car_foot clear none"> <span class="fl">共<em class="red"> 0 </em>件商品</span> <span class="fr">￥0</span> </div>
+                </div>
+                <!-- 购物车商品 end-->
+            </div>
+            <!-- <div class="family"></div> -->
+        </div>
+    </div>
+    <div class="nav_box">
+        <div class="main_nav">
+            <div class="main_nav_wrap">
+                <ul class="nav clear">
+                    <li><a href="/?f=main_nav&amp;md=index" >首页</a>
+                    </li>
+                    <li><a href="http://www.ve.cn/overseas.html?f=main_nav&amp;md=index">进口奶粉</a>
+                    </li>
+                    <li><a href="http://www.ve.cn/brandcate-1489.html?f=main_nav&amp;md=index">进口纸尿裤</a>
+                    </li>
+                    <li><a href="/koubei.html?f=main_nav&amp;md=index">口碑中心</a>
+                    </li>
+                    <li><a href="/index.php?ctl=download?f=main_nav&amp;md=index">手机客户端</a>
+                    </li>
+                    <li><a href="/support.html?f=main_nav&amp;md=index">正品保证</a>
+                    </li>
+                </ul>
+                <div id="nav-assure" class="nav-support">
+                    <a class="item" href="/support.html?f=main_nav&amp;md=index#ser-3" target="_blank"><i class="icon icon-support1"></i><span>中华财险承保</span></a>
+                    <a class="item" href="/support.html?f=main_nav&amp;md=index#ser-1" target="_blank"><i class="icon icon-support2"></i><span>100%正品保证</span></a>
+                    <a class="item" href="/support.html?f=main_nav&amp;md=index#ser-6" target="_blank"><i class="icon icon-support3"></i><span>14天无理由退货</span></a>
+                    <a class="item" href="/support.html?f=main_nav&amp;md=index#ser-7" target="_blank"><i class="icon icon-support4"></i><span>满88元包邮</span></a>
+                </div>
+            </div>
+        </div>
+        <!-- 全站二级导航 -->
+        <div class="sub_nav subTwo_nav">
+            <ul class="nav clear">
+                <li><a href="/cates/cid-76.html?f=sub_nav&amp;md=index">纸尿裤</a>
+                </li>
+                <li><a href="/cates/cid-80.html?f=sub_nav&amp;md=index">保养品</a>
+                </li>
+                <li><a href="/cates/cid-79.html?f=sub_nav&amp;md=index">生活用品</a>
+                </li>
+                <li><a href="/cates/cid-73.html?f=sub_nav&amp;md=index">亲子装</a>
+                </li>
+                <li><a href="/cates/cid-72.html?f=sub_nav&amp;md=index">孕妇装</a>
+                </li>
+                <li><a href="/cates/cid-68.html?f=sub_nav&amp;md=index">宝宝用品</a>
+                </li>
+                <li><a href="/cates/cid-67.html?f=sub_nav&amp;md=index">玩具/学习</a>
+                </li>
+                <li><a href="/cates/cid-66.html?f=sub_nav&amp;md=index">童鞋</a>
+                </li>
+                <li><a href="/cates/cid-69.html?f=sub_nav&amp;md=index">婴儿装</a>
+                </li>
+                <li class="view-AgeList age-list-copy">
+                    <a href="javascript:;" id="nav-cate" data-t="0">性别年龄<i class="icon-more"></i></a>
+                    <div class="sub-list-copy">
+                        <i class="arrow"></i>
+                        <h5>男孩</h5>
+                        <p class="sex-age boy"> <a href="/cates/aid-83-sid-2.html?f=sub_nav_2&amp;md=index" title="0-1岁">0-1岁</a>
+                            <a href="/cates/aid-74-sid-2.html?f=sub_nav_2&amp;md=index" title="1-3岁">1-3岁</a>
+                            <a href="/cates/aid-70-sid-2.html?f=sub_nav_2&amp;md=index" title="3-6岁">3-6岁</a>
+                            <a href="/cates/aid-65-sid-2.html?f=sub_nav_2&amp;md=index" title="6-12岁">6-12岁</a>
+
+                        </p>
+                        <h5>女孩</h5>
+                        <p class="sex-age">
+                            <a href="/cates/aid-83-sid-3.html?f=sub_nav_2&amp;md=index" title="0-1岁">0-1岁</a>
+                            <a href="/cates/aid-74-sid-3.html?f=sub_nav_2&amp;md=index" title="1-3岁">1-3岁</a>
+                            <a href="/cates/aid-70-sid-3.html?f=sub_nav_2&amp;md=index" title="3-6岁">3-6岁</a>
+                            <a href="/cates/aid-65-sid-3.html?f=sub_nav_2&amp;md=index" title="6-12岁">6-12岁</a>
+                            <a href="/cates/aid-62-sid-3.html?f=sub_nav_2&amp;md=index" title="孕妈">孕妈</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="icon-toptel">400-616-1111</li>
+            </ul>
+        </div>
+        <!-- 首页和频道分类页快捷导航 -->
+        <div class="sub_nav fast_nav">
+            <ul class="nav">
+                <li class="fast_logo">
+                    <a data-interaction="global|fastnav|1|0" href="/?f=fast_nav&amp;md=index"><img src="http://statics.quxiu.me/statics/assets/css/img/ve_img/ve_logo_f.png?20141227">
+                    </a>
+                </li>
+
+                <li><a href="/cates/cid-76.html?f=fast_nav&amp;md=index">纸尿裤</a>
+                </li>
+
+                <li><a href="/cates/cid-80.html?f=fast_nav&amp;md=index">保养品</a>
+                </li>
+
+                <li><a href="/cates/cid-79.html?f=fast_nav&amp;md=index">生活用品</a>
+                </li>
+
+                <li><a href="/cates/cid-73.html?f=fast_nav&amp;md=index">亲子装</a>
+                </li>
+
+                <li><a href="/cates/cid-72.html?f=fast_nav&amp;md=index">孕妇装</a>
+                </li>
+
+                <li><a href="/cates/cid-68.html?f=fast_nav&amp;md=index">宝宝用品</a>
+                </li>
+
+                <li><a href="/cates/cid-67.html?f=fast_nav&amp;md=index">玩具/学习</a>
+                </li>
+
+                <li><a href="/cates/cid-66.html?f=fast_nav&amp;md=index">童鞋</a>
+                </li>
+
+                <li><a href="/cates/cid-69.html?f=fast_nav&amp;md=index">婴儿装</a>
+                </li>
+
+                <li class="view-AgeList age-list">
+                    <a href="javascript:void(0);" id="nav-fast-more" data-t="0">性别年龄 <i class="icon-more"></i>
+                    </a>
+                    <div class="sub-list">
+                        <i class="arrow"></i>
+                        <h5>男孩</h5>
+                        <p class="sex-age boy"> <a href="/cates/aid-83-sid-2.html?f=fast_nav&amp;md=index" title="0-1岁">0-1岁</a>
+                            <a href="/cates/aid-74-sid-2.html?f=fast_nav&amp;md=index" title="1-3岁">1-3岁</a>
+                            <a href="/cates/aid-70-sid-2.html?f=fast_nav&amp;md=index" title="3-6岁">3-6岁</a>
+                            <a href="/cates/aid-65-sid-2.html?f=fast_nav&amp;md=index" title="6-12岁">6-12岁</a>
+
+                        </p>
+                        <h5>女孩</h5>
+                        <p class="sex-age">
+                            <a href="/cates/aid-83-sid-3.html?f=fast_nav&amp;md=index" title="0-1岁">0-1岁</a>
+                            <a href="/cates/aid-74-sid-3.html?f=fast_nav&amp;md=index" title="1-3岁">1-3岁</a>
+                            <a href="/cates/aid-70-sid-3.html?f=fast_nav&amp;md=index" title="3-6岁">3-6岁</a>
+                            <a href="/cates/aid-65-sid-3.html?f=fast_nav&amp;md=index" title="6-12岁">6-12岁</a>
+                            <a href="/cates/aid-62-sid-3.html?f=fast_nav&amp;md=index" title="孕妈">孕妈</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+$${html}
+</div>
+
+
+<!-- ve2_footer -->
+<div id="footer">
+    <!-- 服务类型icon -->
+    <div class="foot-serv">
+        <div class="content">
+            <ul class="serv-wrap clear">
+            <li><a href="/support.html??f=foot_serv&amp;md=index#xfzbz" target="_blank"><i class="icon-fitem1"></i><span>中华财险承保</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#zpbz" target="_blank"><i class="icon-fitem2"></i><span>正品保证</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#qwrz" target="_blank"><i class="icon-fitem3"></i><span>权威认证</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#xfzbz" target="_blank"><i class="icon-fitem4"></i><span>消费者保障</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#djwq" target="_blank"><i class="icon-fitem5"></i><span>打假维权</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#sdfh" target="_blank"><i class="icon-fitem6"></i><span>闪电发货</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#zyck" target="_blank"><i class="icon-fitem7"></i><span>专业仓库</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#14th" target="_blank"><i class="icon-fitem8"></i><span>14天退货</span></a></li>
+            <li><a href="/support.html??f=foot_serv&amp;md=index#txkf" target="_blank"><i class="icon-fitem9"></i><span>贴心客服</span></a></li>
+        </ul>
+        </div>
+    </div>
+    <!-- 服务类型icon end /-->
+    <!-- footer 主区块 -->
+    <div class="footer-container">
+        <div class="content clear">
+            <div class="foot-logo">
+                <img src="http://statics.quxiu.me/statics/assets/css/img/ve_img/footer-logo.png?20150109" width="290" height="204" alt="">
+            </div>
+            <div class="foot-link-wrap">
+                <p class="nav-list">
+                    <a href="http://www.ve.cn/?f=foot_link&amp;md=index" class="nav-item">首页</a><i>|</i>
+                    <a href="http://www.ve.cn/help-2.html?f=foot_link&amp;md=index" class="nav-item">关于我们</a><i>|</i>
+                    <a href="http://www.ve.cn/help-25.html?f=foot_link&amp;md=index" class="nav-item">媒体报道</a><i>|</i>
+                    <a href="/support.html??f=foot_link&amp;md=index#zpbz" class="nav-item">正品保证</a><i>|</i>
+                    <a href="http://www.ve.cn/help-19.html?f=foot_link&amp;md=index" class="nav-item">联系我们</a><i>|</i>
+                    <a href="http://www.ve.cn/help-1.html?f=foot_link&amp;md=index" class="nav-item">帮助中心</a><i>|</i>
+                    <a href="http://www.ve.cn/help-26.html?f=foot_link&amp;md=index" class="nav-item">友情链接</a><i>|</i>
+                    <a href="http://www.ve.cn/index.php?ctl=download&amp;f=foot_link&amp;md=index" class="nav-item">手机客户端</a><i>|</i>
+                    <a onclick="window.open('http://v2.live800.com/live800/chatClient/chatbox.jsp?companyID=457738&amp;jid=3221650122&amp;skillId=6642', 'newwindow', 'height=540, width=800, top=0,left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no')" href="javascript:;" class="nav-item">客服在线</a>
+                </p>
+                <div class="foot-nav-c clear">
+                    <div class="content-link clear">
+                                                                 <dl>
+                            <dt class="tit">服务保障</dt>
+                            <dd><a href="/help-34.html??f=foot_nav&amp;md=index">100%正品保证</a></dd><dd><a href="/help-35.html??f=foot_nav&amp;md=index">14天无理由退货</a></dd><dd><a href="/help-36.html??f=foot_nav&amp;md=index">7*13小时客服服务</a></dd><dd><a href="/help-37.html??f=foot_nav&amp;md=index">24小时闪电发货</a></dd>                        </dl>
+                                                                <dl>
+                            <dt class="tit">使用帮助</dt>
+                            <dd><a href="/help-18.html??f=foot_nav&amp;md=index">购物指南</a></dd><dd><a href="/user-register.html??f=foot_nav&amp;md=index">新用户注册</a></dd><dd><a href="/help-17.html??f=foot_nav&amp;md=index">用户协议</a></dd><dd><a href="/help-33.html??f=foot_nav&amp;md=index">隐私条款</a></dd><dd><a href="/help-23.html??f=foot_nav&amp;md=index">退货服务政策</a></dd>                        </dl>
+                                                                <dl>
+                            <dt class="tit">支付方式</dt>
+                            <dd><a href="/help-6.html??f=foot_nav&amp;md=index">14家主流网银支付</a></dd><dd><a href="/help-10.html??f=foot_nav&amp;md=index">支付宝支付</a></dd><dd><a href="/help-11.html??f=foot_nav&amp;md=index">信用卡支付</a></dd><dd><a href="/help-12.html??f=foot_nav&amp;md=index">优惠券</a></dd>                        </dl>
+                                                                <dl>
+                            <dt class="tit">配送方式</dt>
+                            <dd><a href="/help-13.html??f=foot_nav&amp;md=index">全场包邮</a></dd><dd><a href="/help-14.html??f=foot_nav&amp;md=index">配送范围</a></dd><dd><a href="/help-15.html??f=foot_nav&amp;md=index">配送说明</a></dd><dd><a href="/help-16.html??f=foot_nav&amp;md=index">验货签收</a></dd>                        </dl>
+                                        </div>
+                    <div class="content-app">
+                        <ul class="clear">
+                            <li>
+                                <i class="icon-ve-app"></i>
+                                <span>唯一优品app</span>
+                            </li>
+                            <li>
+                                <i class="icon-ve-wx"></i>
+                                <span>关注官方微信</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer 主区块 end /-->
+    <!-- 小导航 end /-->   
+    <div class="footer-copyright">
+        <div class="content">
+            <p>Copyright © 2014&nbsp;广州微店网络科技有限公司 ve.cn 使用本网站即表示接受唯一用户协议。 <a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">粤ICP备14068931号-1</a></p>
+            <p>
+     <a target="_blank" href="http://statics.quxiu.me/statics/assets/css/img/yyzz.jpg?20141117">营业执照</a> | <a target="_blank" href="http://statics.quxiu.me/statics/assets/css/img/bbbd.jpg?20141117">中华财险</a> | <a target="_blank" href="http://statics.quxiu.me/statics/assets/css/img/spxk.jpg?20141117">食品流通许可证 SP4401061410023262</a></p>
+             <div class="footer-links">
+                <a href="javascript:;" title="可信网站身份验证" rel="nofollow"><i class="f-logo-1"></i></a>
+                <a href="javascript:;" target="_blank" title="经营性网站备案信息" rel="nofollow"><i class="f-logo-2"></i></a>
+                <a href="http://www.gzaic.gov.cn/GZCX/WebUI/credit/qiyeInfo.htm" target="_blank" title="" rel="nofollow"><i class="f-logo-3"></i></a>
+                <a href="javascript:;" target="_blank" title="" rel="nofollow"><i class="f-logo-4"></i></a>
+                <a href="javascript:;" target="_blank" title="" rel="nofollow"><i class="f-logo-5"></i></a>
+                <a href="https://www.95516.com/" target="_blank" title="" rel="nofollow"><i class="f-logo-6"></i></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script id="ve_require" src="http://statics.quxiu.me/statics/Lib/require/require.js?_v2.2"></script>
+<script id="ve_jquery" src="http://statics.quxiu.me/statics/Lib/jquery/jquery.min.js?_v2.2"></script>
+<script id="ve_cfg" src="http://statics.quxiu.me/statics/assets/js/config.js?_2cc910af12aed6f20d5c"></script>
+<script>
+require(['web/common'],function(common){ common.hover_qr();});
+</script>
+<script type="text/javascript">
+$${js}
+</script>
+
+</body>
+
+</html>

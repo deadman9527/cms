@@ -1,0 +1,76 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'page';
+	
+block container
+	link(rel='stylesheet', href='/assets/lib/codemirror/codemirror.css')
+	link(rel='stylesheet', href='/assets/lib/codemirror/theme/ambiance.css')
+	
+	style.
+		.navbar{margin-bottom:0;}
+	
+	form#J_Form(action="", method="post")
+			
+		div.mod-panel
+			div.phone-panel
+				div.toolbar-panel
+					a.btn.btn-info.btn-sm(role="button", href="/doc/code", target="_blank") Coding Help
+					button#J_SubmitBtn.btn.btn-primary.btn-sm(type="button") 保存代码
+					a.btn.btn-default.btn-sm(role="button", href="/page/#{pageData._id.toString()}") 编辑数据
+				
+				h3 预览
+				div.phone-screen.J_screen
+					iframe(src="/page/preview/#{pageData._id.toString()}")
+
+			div.edit-panel
+				ul.nav.nav-tabs(role="tablist")
+					li.active(role="presentation")
+						a(href="#Fields", role="tab", data-toggle="tab", data-obj="confPanel") Fields Config
+					li(role="presentation")
+						a(href="#Template", role="tab", data-toggle="tab", data-obj="htmlPanel") Template
+						
+					- if(pageData.pageType === 'm' || pageData.pageType === 'pc')
+						li(role="presentation")
+							a(href="#CSS", role="tab", data-toggle="tab", data-obj="cssPanel") CSS
+						li(role="presentation")
+							a(href="#JavaScript", role="tab", data-toggle="tab", data-obj="jsPanel") JavaScript
+
+				.tab-content
+					.tab-pane.fade.in.active#Fields(role="tabpanel")
+						.js-panel
+							textarea#J_ConfigCode(name="config") #{JSON.stringify(pageData.code.fields, null, 4)}
+					.tab-pane.fade#Template(role="tabpanel")
+						.html-panel
+							textarea#J_HtmlCode(name="html") #{pageData.code.code.html}
+							
+					- if(pageData.pageType === 'm' || pageData.pageType === 'pc')
+						.tab-pane.fade#CSS(role="tabpanel")
+							.css-panel
+								textarea#J_CssCode(name="css") #{pageData.code.code.css}
+						.tab-pane.fade#JavaScript(role="tabpanel")
+							.js-panel
+								textarea#J_JsCode(name="js") #{pageData.code.code.js}
+							
+				- if(pageData.pageType === 'm' || pageData.pageType === 'pc')
+					h3 CSS Url
+					div.css-panel
+						.input-group
+							span.input-group-addon http://m.quxiu.me/min/?f=
+							input.form-control(type="text", name="cssUrl", value= pageData.code.assets.css)
+					h3 JS Url
+					div.js-panel
+						.input-group
+							span.input-group-addon http://m.quxiu.me/min/?f=
+							input.form-control(type="text", name="jsUrl", value= pageData.code.assets.js)
+				
+
+	script(type="text/javascript", src="/assets/lib/codemirror/codemirror.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/keymap/sublime.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/xml/xml.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/css/css.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/htmlmixed/htmlmixed.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/javascript/javascript.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/addon/selection/active-line.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/addon/edit/matchbrackets.js")
+	script(type="text/javascript", src="/assets/pagecode.js")
+

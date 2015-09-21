@@ -1,0 +1,137 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'page';
+	- header.ngApp = 'cms';
+	
+block container
+	link(rel="stylesheet", href="/assets/buildpage.css")
+	
+	block buildPageCfg
+
+							
+	- var initData = ["pageId='" + pageData._id.toString() + "'"];
+	- initData.push("infoData={'id': '" + pageData._id.toString() + "', 'title': '" + pageData.title + "', 'white': " + JSON.stringify(pageData.whiteList || []) + "}");
+	- if(pageData.buildType === 'visual')
+		- initData.push("pageModList=" + JSON.stringify(pageData.modList || []));
+		- initData.push("curTag='" + (pageData.pageType === "pc" ? "pc" : "mobile") + "'");
+	- else
+		- initData.push("pageCode=" + JSON.stringify(pageData.code));
+
+	div.container(ng-controller="buildMobile" ng-init= initData.join(';'))
+
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 !{buildCfg.title}
+							small !{pageData.title}
+							small
+								+pageStatus(pageData, statusMap)
+
+						.page-operate
+							- if(pageData.buildType === 'code')
+								- if(header.permission === 'admin' || header.permission === 'coder')
+									a.btn.btn-default(role="button", href="/page/code/#{pageData._id.toString()}") 
+										span.glyphicon.glyphicon-edit
+										|  编辑代码
+								button.btn.btn-default(type="button", data-toggle="modal", data-target="#J_EditDataDialog", ng-click="editModule()") 
+									span.glyphicon.glyphicon-th-list
+									|  编辑数据
+							
+							+pageOperate(pageData)
+							
+							- if((pageData.curStatus.id === 'published' || pageData.curStatus.id === 'editing') && (pageData.pageType === 'm' || pageData.pageType === 'pc') && pageData.piwik && pageData.piwik.data)
+								span.label.label-info pv: !{pageData.piwik.data.nb_hits} 
+								span.label.label-info uv: !{pageData.piwik.data.nb_uniq_visitors}
+								button.btn.btn-default.btn-xs(type="button", data-toggle="modal", data-target="#J_PiwikIframeDialog", ng-click="showPiwikData('#{pageData.piwik.transUrl}', '页面出入')") 
+									span.glyphicon.glyphicon-stats
+									|  页面出入
+								button.btn.btn-default.btn-xs(type="button", data-toggle="modal", data-target="#J_PiwikIframeDialog", ng-click="showPiwikData('#{pageData.piwik.evUrl}', '页面趋势')") 
+									span.glyphicon.glyphicon-stats
+									|  页面趋势
+							
+							
+									
+		- if(pageData.buildType === 'visual')
+			.row
+				col-md-12
+					.btn-group.btn-group-sm.module-tag
+						- each tag, tagKey in modTagList
+							button.btn.btn-default(type="button", ng-class="{'btn-default': curTag !== '#{tagKey}', 'btn-info': curTag === '#{tagKey}'}", ng-click="tagSelect('#{tagKey}')") !{tag}
+
+					ul.module-list.pull-right.list-unstyled
+						- moduleData.forEach(function(m){
+							li.module-item 
+								button.btn.btn-default(type="button", ng-show="!curTag || (#{JSON.stringify(m.tag)} | filter:curTag).length > 0", ng-click= "addModule(" + JSON.stringify(m) + ")") 
+									span.glyphicon.glyphicon-plus
+									|  !{m.name}
+						- });
+		
+		.row
+			- if(pageData.buildType === 'visual')
+				div(class= buildCfg.layoutCls)
+					div(class= buildCfg.typeCls)
+						.screen
+							.widget-box(ng-repeat="mod in pageModList")
+								.widget-head
+									p {{mod.name}}
+									ul.opt
+										li.up(ng-click="upModule(mod.id)") 上
+										li.down(ng-click="downModule(mod.id)") 下
+										li.edit(ng-click="editModule(mod.id)", data-toggle="modal", data-target="#J_EditDataDialog") 改
+										li.del(ng-click="delModule(mod.id)") 删
+								.widget-body(ng-bind-html="secModule(mod.render)")
+				
+			div(class= buildCfg.layoutCls)
+				div(class= buildCfg.typeCls)
+					- if(pageData.buildType === 'visual')
+						.sync-data
+							span(data-toggle="modal", data-target="#J_WaitingDialog", ng-click="updateMod()") 更新模块
+							span(ng-click="sync()") 同步数据
+							span(data-toggle="modal", data-target="#J_WaitingDialog", ng-click="updateProduct()") 更新商品数据
+					.screen
+						iframe#J_ViewIframe(src="/page/preview/" + pageData._id.toString())
+				
+		script(src="/assets/buildpage.js")
+		
+		#J_EditDataDialog.modal.fade(role="dialog", aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					form.form-horizontal.modDataCon(role="form", name="editModForm", ng-controller='editModCtrl')
+						.modal-header
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true") &times;
+								span.sr-only Close
+							h4.modal-title 
+								| 数据编辑
+								- if(pageData.buildType === 'visual')
+									| - {{curEditMod.name}}
+						.modal-body
+							- if(pageData.buildType === 'code')
+								- var data = pageData.code;
+								include ../includes/datatemp.jade
+							- else
+								div(ng-include="modDataTempUrl", onload="onload()")
+						.modal-footer
+							button.btn.btn-primary(type="button", ng-click="renderModule()") 保存
+							button.btn.btn-default(type="button", data-dismiss="modal") 取消
+		
+		#J_PiwikIframeDialog.piwikDailog.modal.fade(role="dialog", aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					.modal-header
+						button.close(type="button", data-dismiss="modal")
+							span(aria-hidden="true") &times;
+							span.sr-only Close
+						h4.modal-title 
+							| 数据 - {{piwikDataTitle}}
+					.modal-body
+						iframe#J_PiwikIframe
+								
+		#J_WaitingDialog.modal.fade(role="dialog", aria-hidden="true")
+			.modal-dialog.modal-sm
+				.modal-content
+					.modal-body
+						h4(style="text-align:center;") 请等待...		
+
+		+pageOperateJs()

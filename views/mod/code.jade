@@ -1,0 +1,75 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'mod';
+	
+block container
+	link(rel='stylesheet', href='/assets/lib/codemirror/codemirror.css')
+	link(rel='stylesheet', href='/assets/lib/codemirror/theme/ambiance.css')
+	
+	style.
+		.navbar{margin-bottom:0;}
+	
+	form#J_Form(action="", method="post")
+			
+		div.mod-panel
+			div.phone-panel
+				div.toolbar-panel
+					a.btn.btn-info.btn-sm(role="button", href="/doc/code", target="_blank") Coding Help
+					button#J_SubmitBtn.btn.btn-primary.btn-sm(type="button") 保存代码
+
+				h3 预览
+				div.J_screen(class= (isPc ? 'pc-screen' : 'phone-screen'))
+					iframe(src="/mod/preview/#{modData._id.toString()}")
+
+			div.edit-panel
+				ul.nav.nav-tabs(role="tablist")
+					li.active(role="presentation")
+						a(href="#Fields", role="tab", data-toggle="tab", data-obj="confPanel") Fields Config
+					li(role="presentation")
+						a(href="#Template", role="tab", data-toggle="tab", data-obj="htmlPanel") Template
+					li(role="presentation")
+						a(href="#CSS", role="tab", data-toggle="tab", data-obj="cssPanel") CSS
+					li(role="presentation")
+						a(href="#JavaScript", role="tab", data-toggle="tab", data-obj="jsPanel") JavaScript
+					li(role="presentation")
+						a(href="#TestData", role="tab", data-toggle="tab", data-obj="dataPanel") Test Data
+
+				.tab-content
+					.tab-pane.fade.in.active#Fields(role="tabpanel")
+						.js-panel
+							textarea#J_ConfigCode(name="config") #{JSON.stringify(modData.fields, null, 4)}
+					.tab-pane.fade#Template(role="tabpanel")
+						.html-panel
+							textarea#J_HtmlCode(name="html") #{modData.code.html}
+					.tab-pane.fade#CSS(role="tabpanel")
+						.css-panel
+							textarea#J_CssCode(name="css") #{modData.code.css}
+					.tab-pane.fade#JavaScript(role="tabpanel")
+						.js-panel
+							textarea#J_JsCode(name="js") #{modData.code.js}
+					.tab-pane.fade#TestData(role="tabpanel")
+						.js-panel
+							textarea#J_DataCode(name="data") #{JSON.stringify(modData.data, null, 4)}
+				- if(!isPc)
+					h3 CSS Url
+					div.css-panel
+						.input-group
+							span.input-group-addon http://m.quxiu.me/min/?f=
+							input.form-control(type="text", name="cssUrl", value= modData.assets.css)
+					h3 JS Url
+					div.js-panel
+						.input-group
+							span.input-group-addon http://m.quxiu.me/min/?f=
+							input.form-control(type="text", name="jsUrl", value= modData.assets.js)
+
+
+	script(type="text/javascript", src="/assets/lib/codemirror/codemirror.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/keymap/sublime.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/xml/xml.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/css/css.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/htmlmixed/htmlmixed.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/mode/javascript/javascript.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/addon/selection/active-line.js")
+	script(type="text/javascript", src="/assets/lib/codemirror/addon/edit/matchbrackets.js")
+	script(type="text/javascript", src="/assets/pagecode.js")
+

@@ -1,0 +1,54 @@
+mixin menuItem(text, link, isActive)
+	- if(isActive)
+		li.active
+			a(href= link)= text
+	- else
+		li
+			a(href= link)= text
+
+<!DOCTYPE html>
+<html ng-app="!{header.ngApp}">
+<head>
+<meta charset="utf-8">
+<title>!{header.title || '趣秀CMS'}</title>
+<link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/base.css" rel="stylesheet">
+<script src="/assets/lib/jquery.js"></script>
+<script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/lib/angular/angular.min.js"></script>
+<script src="/assets/lib/angular/angular-sanitize.min.js"></script>
+<script src="http://g.tbcdn.cn/kissy/k/1.4.1/seed-min.js"></script>
+<script src="/assets/lib/layer/layer.js"></script>
+</head>
+<body>
+.navbar.navbar-default.navbar-static-top(role='navigation')
+	.container
+		.navbar-header
+			button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			a.navbar-brand(href='/') 趣秀CMS
+		.navbar-collapse.collapse
+			ul.nav.navbar-nav
+				+menuItem('页面', '/page', header.menu === 'page')
+				- if(header.permission === 'admin' || header.permission === 'coder')
+					+menuItem('模块', '/mod', header.menu === 'mod')
+				+menuItem('图片空间', '/img/upload', header.menu === 'img')
+				+menuItem('二维码', '/qrcode/create', header.menu === 'qrcode')
+				+menuItem('帮助', '/doc/help', header.menu === 'doc')
+				- if(header.permission === 'admin')
+					+menuItem('管理', '/s/list', header.menu === 'admin')
+				
+			ul.nav.navbar-nav.navbar-right
+				- if(header.isLogin)
+					li 
+						a !{header.name}（!{header.uid}）
+					li
+						a(href='/s/password') 修改密码
+					li
+						a(href="/logout") 退出
+				- else
+					li 
+						a(href="/login") 登录

@@ -1,0 +1,54 @@
+extend ../layout
+block pageCfg
+	- header.menu = 'img';
+	
+block container
+	link(rel="stylesheet",href="/assets/list.css")
+	style.
+		.title{
+			position: relative;
+		}
+		.title .desc{
+			display:none;
+			position:absolute;
+			top:0;
+			left:0;
+			z-index:10;
+		}
+		.title:hover .desc{
+			display:block;
+		}
+	
+	div.container
+		.pages-list
+			.row
+				.col-md-12
+					.wrapper
+						h2 我的图片
+							a.create_btn.btn.btn-primary(role='button', href="/img/upload") 图片上传
+						
+						table.table
+							thead
+								tr
+									th(width="20%") 图片
+									th(width="") 链接
+									
+							tbody
+								- listData.forEach(function(item, i){
+									tr
+										td
+											a.title(href= item.url, target="_blank")
+												img(src= item.url, height="20")
+												img.desc(src= item.url, style="max-width:300px;")
+										td
+											| !{item.url}
+								- });
+								- if(listData.length === 0)
+									tr
+										td(colspan="2") 无结果！
+								
+						+pagination(search.curPage, page.totalPage)
+						
+	script(src="/assets/pagination.js")
+		
+
